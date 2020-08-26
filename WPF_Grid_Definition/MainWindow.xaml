@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="red"/>
+
+        <Grid Grid.Row="0" Grid.Column="2" Background="Purple"/>
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Aqua"/>
+
+        <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Background="Blue"/>
+
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Background="Yellow"/>
     </Grid>
 </Window>
