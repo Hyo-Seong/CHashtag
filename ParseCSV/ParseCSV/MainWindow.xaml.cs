@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParseCSV.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace ParseCSV
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainWindowViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();
+            _viewModel = new MainWindowViewModel();
+            this.DataContext = _viewModel;
         }
     }
 }
