@@ -4,12 +4,9 @@ using ParseCSV.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ParseCSV.ViewModels
 {
@@ -70,6 +67,7 @@ namespace ParseCSV.ViewModels
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
 
+                // 헤더값을 List에 넣지 않기 위해 첫줄을 읽도록 한다.
                 parser.ReadFields();
                 while (!parser.EndOfData)
                 {
@@ -89,9 +87,10 @@ namespace ParseCSV.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// 경로를 검증한다.
+        /// true : 옳바른 경로이다.
+        /// false : 부적절한 경로이다.
         /// </summary>
-        /// <returns></returns>
         private bool ValidateCsvFilePath()
         {
             if (string.IsNullOrWhiteSpace(CsvFilePath) ||
