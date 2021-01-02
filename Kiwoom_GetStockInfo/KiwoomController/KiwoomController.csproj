@@ -63,8 +63,10 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="KiwoomController.cs" />
+    <Compile Include="APIWrapper.cs" />
+    <Compile Include="Models\ResultCode.cs" />
     <Compile Include="Models\Market.cs" />
+    <Compile Include="Models\OnReceiveTrData.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
