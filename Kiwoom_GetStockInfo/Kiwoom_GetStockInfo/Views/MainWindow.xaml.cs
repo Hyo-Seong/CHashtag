@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kiwoom_GetStockInfo.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,14 @@ namespace Kiwoom_GetStockInfo.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();
+
+            _viewModel = new MainWindowViewModel();
+            
+            this.DataContext = _viewModel;
         }
     }
 }
