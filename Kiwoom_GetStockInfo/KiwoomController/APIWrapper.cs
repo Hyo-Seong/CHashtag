@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace KiwoomController
 {
-    public class KiwoomController
+    public class APIWrapper
     {
         private AxKHOpenAPI api;
 
-        public delegate void OnEventConnectDelegate(object sender, _DKHOpenAPIEvents_OnEventConnectEvent e);
+        public delegate void OnEventConnectDelegate(object sender, ResultCode resultCode);
         public event OnEventConnectDelegate OnEventConnect;
 
-        public delegate void OnReceiveTrDataDelegate(object sender, _DKHOpenAPIEvents_OnReceiveTrDataEvent e);
+        public delegate void OnReceiveTrDataDelegate(object sender, OnReceiveTrData e);
         public event OnReceiveTrDataDelegate OnReceiveTrData;
 
-        public KiwoomController()
+        public APIWrapper()
         {
             api = new Form1().GetAPI();
 
@@ -46,7 +46,12 @@ namespace KiwoomController
             return api.CommConnect();
         }
 
-        public string GetMarketByMarket(Market market)
+        public string GetStockNameByCode(string stockCode)
+        {
+            return api.GetMasterCodeName(stockCode);
+        }
+
+        public string GetStockCodeListByMarket(Market market)
         {
             return api.GetCodeListByMarket(((int)market).ToString());
         }
@@ -58,7 +63,18 @@ namespace KiwoomController
 
         private void Api_OnReceiveTrData(object sender, _DKHOpenAPIEvents_OnReceiveTrDataEvent e)
         {
-            OnReceiveTrData?.Invoke(sender, e);
+            OnReceiveTrData?.Invoke(sender, new OnReceiveTrData 
+            { 
+                nDataLength = e.nDataLength,
+                sErrorCode = e.sErrorCode,
+                sMessage = e.sMessage,
+                sPrevNext = e.sPrevNext,
+                sRecordName = e.sRecordName,
+                sRQName = e.sRQName,
+                sScrNo = e.sScrNo,
+                sSplmMsg = e.sSplmMsg,
+                sTrCode = e.sTrCode
+            });
         }
 
         private void Api_OnReceiveTrCondition(object sender, _DKHOpenAPIEvents_OnReceiveTrConditionEvent e)
@@ -92,7 +108,7 @@ namespace KiwoomController
 
         private void Api_OnEventConnect(object sender, _DKHOpenAPIEvents_OnEventConnectEvent e)
         {
-            OnEventConnect?.Invoke(sender, e);
+            OnEventConnect?.Invoke(sender, (ResultCode)e.nErrCode);
         }
     }
 }
