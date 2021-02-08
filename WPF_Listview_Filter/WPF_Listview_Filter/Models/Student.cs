@@ -21,7 +21,7 @@ namespace WPF_Listview_Filter.Models
         }
 
         private int _age;
-        private int Age
+        public int Age
         {
             get => _age;
             set
