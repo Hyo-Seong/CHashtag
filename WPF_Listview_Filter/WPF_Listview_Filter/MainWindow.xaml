@@ -11,30 +11,29 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <!-- 검색 영역 -->
         <StackPanel Margin="3" Orientation="Horizontal" Grid.Row="0">
             <TextBlock Margin="5" Text="이름으로 검색" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
             <TextBox Width="400" Height="30" Padding="5" FontSize="14" HorizontalAlignment="Center" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding StudentCollection}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="Gray">
-                            <Grid>
-                                <TextBlock FontSize="16">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0}, Age: {1}, Country: {2}">
-                                            <Binding Path="Name" />
-                                            <Binding Path="Age" />
-                                            <Binding Path="Country" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        <!-- ListView 영역 -->
+        <ListView Grid.Row="1" ItemsSource="{Binding StudentCollection}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <!-- DataTemplate 에는 하나의 자식만 허용하기 때문에 Grid로 감싸면 편리합니다. -->
+                    <Grid>
+                        <TextBlock FontSize="16">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}, Age: {1}, Country: {2}">
+                                    <Binding Path="Name" />
+                                    <Binding Path="Age" />
+                                    <Binding Path="Country" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>
