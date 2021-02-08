@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF_Listview_Filter.ViewModels;
 
 namespace WPF_Listview_Filter
 {
@@ -20,9 +21,13 @@ namespace WPF_Listview_Filter
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainViewModel _viewModel;
         public MainWindow()
         {
             InitializeComponent();
+
+            _viewModel = new MainViewModel();
+            this.DataContext = _viewModel;
         }
     }
 }

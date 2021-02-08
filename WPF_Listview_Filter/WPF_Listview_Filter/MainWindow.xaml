@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Listview_Filter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="3" Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Margin="5" Text="이름으로 검색" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+            <TextBox Width="400" Height="30" Padding="5" FontSize="14" HorizontalAlignment="Center" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <ListView ItemsSource="{Binding StudentCollection}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray">
+                            <Grid>
+                                <TextBlock FontSize="16">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}, Age: {1}, Country: {2}">
+                                            <Binding Path="Name" />
+                                            <Binding Path="Age" />
+                                            <Binding Path="Country" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>
