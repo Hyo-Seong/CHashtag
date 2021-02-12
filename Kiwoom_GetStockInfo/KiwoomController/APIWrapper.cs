@@ -21,6 +21,9 @@ namespace KiwoomController
         public delegate void OnReceiveTrDataDelegate(object sender, OnReceiveTrData e);
         public event OnReceiveTrDataDelegate OnReceiveTrData;
 
+        public delegate void OnReceiveRealDataDelegate(object sender, OnReceiveRealData e);
+        public event OnReceiveRealDataDelegate OnReceiveRealData;
+
         public APIWrapper()
         {
             api = new Form1().GetAPI();
@@ -56,6 +59,16 @@ namespace KiwoomController
             return api.GetCodeListByMarket(((int)market).ToString());
         }
 
+        public void CommRqData(Dictionary<string, string> inputValues, string rqName, Transaction transaction, string screenNum)
+        {
+            foreach(var a in inputValues)
+            {
+                api.SetInputValue(a.Key, a.Value);
+            }
+
+            api.CommRqData(rqName, transaction.ToString(), 0, screenNum);
+        }
+
         public string GetCommData(string rqName, Enum @enum)
         {
             return api.GetCommData(@enum.GetType().Name, rqName, 0, @enum.GetDescription());
@@ -83,13 +96,19 @@ namespace KiwoomController
 
         private void Api_OnReceiveRealData(object sender, _DKHOpenAPIEvents_OnReceiveRealDataEvent e)
         {
+            OnReceiveRealData?.Invoke(sender, new OnReceiveRealData
+            {
+                sRealData = e.sRealData,
+                sRealKey = e.sRealKey,
+                sRealType = e.sRealType
+            });
             // here to code.
         }
 
         private void Api_OnReceiveRealCondition(object sender, _DKHOpenAPIEvents_OnReceiveRealConditionEvent e)
         {
         }
-
+                
         private void Api_OnReceiveMsg(object sender, _DKHOpenAPIEvents_OnReceiveMsgEvent e)
         {
         }

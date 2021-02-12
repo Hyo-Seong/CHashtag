@@ -37,37 +37,43 @@ namespace KiwoomController.Models
             set => SetProperty(ref _volume, value);
         }
 
-        private int _presentPrice;
-        public int PresentPrice
+        private long _presentPrice;
+        public long PresentPrice
         {
             get => _presentPrice;
             set => SetProperty(ref _presentPrice, value);
         }
 
+        private double _upDownRatio;
+        public double UpDownRatio
+        {
+            get => _upDownRatio;
+            set => SetProperty(ref _upDownRatio, value);
+        }
 
-        private int _openPrice;
-        public int OpenPrice
+        private long _openPrice;
+        public long OpenPrice
         {
             get => _openPrice;
             set => SetProperty(ref _openPrice, value);
         }
 
-        private int _closePrice;
-        public int ClosePrice
+        private long _closePrice;
+        public long ClosePrice
         {
             get => _closePrice;
             set => SetProperty(ref _closePrice, value);
         }
 
-        private int _highPrice;
-        public int HighPrice
+        private long _highPrice;
+        public long HighPrice
         {
             get => _highPrice;
             set => SetProperty(ref _highPrice, value);
         }
 
-        private int _lowPrice;
-        public int LowPrice
+        private long _lowPrice;
+        public long LowPrice
         {
             get => _lowPrice;
             set => SetProperty(ref _lowPrice, value);

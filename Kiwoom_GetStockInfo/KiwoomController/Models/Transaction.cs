@@ -7,6 +7,27 @@ using System.Threading.Tasks;
 
 namespace KiwoomController.Models
 {
+    public enum Transaction
+    {
+        // 주식기본정보요청
+        OPT10001,
+        
+        // 주식거래원요청
+        OPT10002,
+        
+        // 체결정보요청
+        OPT10003,
+        
+        // 주식호가요청
+        OPT10004,
+        
+        // 주식일주월시분요청
+        OPT10005,
+        
+        // 주식시분요청
+        OPT10006,
+    }
+
     /// <summary>
     /// 주식기본정보요청
     /// </summary>
@@ -87,7 +108,7 @@ namespace KiwoomController.Models
         [Description("전일대비")]
         전일대비,
         [Description("등락율")]
-        등락율,
+        등락률,
         [Description("거래량")]
         거래량,
         [Description("거래대비")]
