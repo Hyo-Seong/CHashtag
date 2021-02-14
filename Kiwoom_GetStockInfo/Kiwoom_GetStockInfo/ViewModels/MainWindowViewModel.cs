@@ -1,5 +1,6 @@
 ﻿using KiwoomController;
 using KiwoomController.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace Kiwoom_GetStockInfo.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
+        #region Properties
+
         private APIWrapper api;
 
         private ObservableCollection<Stock> _stockList = new ObservableCollection<Stock>();
@@ -56,6 +59,21 @@ namespace Kiwoom_GetStockInfo.ViewModels
             }
         }
 
+        private Market _selectedMarket;
+        public Market SelectedMarket
+        {
+            get => _selectedMarket;
+            set => SetProperty(ref _selectedMarket, value);
+        }
+
+        #endregion
+
+        #region Commands
+
+        public DelegateCommand MarketFilterSelectedItemChangedCommand { get; private set; }
+
+        #endregion
+
         private CollectionViewSource StockCollectionViewSource { get; set; }
 
         public ICollectionView StockCollection
@@ -88,6 +106,13 @@ namespace Kiwoom_GetStockInfo.ViewModels
             StockCollectionViewSource = new CollectionViewSource();
             StockCollectionViewSource.Source = this.StockList;
             StockCollectionViewSource.Filter += ApplyStockFilter;
+
+            MarketFilterSelectedItemChangedCommand = new DelegateCommand(MarketFilterSelectedItemChangedCommandMethod);
+        }
+
+        private void MarketFilterSelectedItemChangedCommandMethod()
+        {
+            OnFilterChanged();
         }
 
         private void InitAPI()
@@ -168,6 +193,7 @@ namespace Kiwoom_GetStockInfo.ViewModels
         {
             Stock stock = (Stock)e.Item;
 
+
             if (string.IsNullOrWhiteSpace(this.Filter) || this.Filter.Length == 0)
             {
                 e.Accepted = true;
@@ -175,6 +201,11 @@ namespace Kiwoom_GetStockInfo.ViewModels
             else
             {
                 e.Accepted = stock.Name.ToLower().Contains(Filter.ToLower());
+            }
+
+            if(SelectedMarket != Market.All && SelectedMarket != stock.Market)
+            {
+                e.Accepted = false;
             }
         }
     }

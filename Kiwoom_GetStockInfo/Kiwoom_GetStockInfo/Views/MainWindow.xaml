@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kiwoom_GetStockInfo.Views"
+        xmlns:ie="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -36,7 +37,12 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <!-- Filter -->
-                        <ListView ItemsSource="{Binding MarketFilter}">
+                        <ListView x:Name="MarketFilterListView" SelectedItem="{Binding SelectedMarket}" ItemsSource="{Binding MarketFilter}">
+                            <ie:Interaction.Triggers>
+                                <ie:EventTrigger EventName="SelectionChanged">
+                                    <ie:InvokeCommandAction Command="{Binding MarketFilterSelectedItemChangedCommand}"/>
+                                </ie:EventTrigger>
+                            </ie:Interaction.Triggers>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="30">
