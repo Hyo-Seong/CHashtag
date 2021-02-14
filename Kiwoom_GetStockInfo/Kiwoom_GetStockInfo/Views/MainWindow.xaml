@@ -27,6 +27,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <!-- Search -->
+                    <TextBox Width="400" Height="30" Padding="5" FontSize="14" HorizontalAlignment="Center" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -35,10 +36,19 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <!-- Filter -->
+                        <ListView ItemsSource="{Binding MarketFilter}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="30">
+                                        <TextBlock Text="{Binding}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                     <Grid Grid.Column="1">
                         <!-- Stock List -->
-                        <ListView ItemsSource="{Binding StockList}">
+                        <ListView ItemsSource="{Binding StockCollection}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
