@@ -13,6 +13,10 @@ namespace KiwoomController.Models
     /// </summary>
     public enum Market
     {
+        // All 을 인자로 받을 경우 모든 market들을 한번씩 조회해서 결과값을 줘야 한다.
+        // 내가 임의로 생성한 값이다.
+        All = -1,
+
         // 장내
         Kospi = 0,
 

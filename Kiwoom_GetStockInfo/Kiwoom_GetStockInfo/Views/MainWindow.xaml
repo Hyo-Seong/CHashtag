@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kiwoom_GetStockInfo.Views"
+        xmlns:ie="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -27,6 +28,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <!-- Search -->
+                    <TextBox Width="400" Height="30" Padding="5" FontSize="14" HorizontalAlignment="Center" Margin="5" Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -35,10 +37,24 @@
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <!-- Filter -->
+                        <ListView x:Name="MarketFilterListView" SelectedItem="{Binding SelectedMarket}" ItemsSource="{Binding MarketFilter}">
+                            <ie:Interaction.Triggers>
+                                <ie:EventTrigger EventName="SelectionChanged">
+                                    <ie:InvokeCommandAction Command="{Binding MarketFilterSelectedItemChangedCommand}"/>
+                                </ie:EventTrigger>
+                            </ie:Interaction.Triggers>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="30">
+                                        <TextBlock Text="{Binding}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                     <Grid Grid.Column="1">
                         <!-- Stock List -->
-                        <ListView ItemsSource="{Binding StockList}">
+                        <ListView ItemsSource="{Binding StockCollection}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>

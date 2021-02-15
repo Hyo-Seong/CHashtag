@@ -64,6 +64,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="APIWrapper.cs" />
+    <Compile Include="Models\OnReceiveRealData.cs" />
     <Compile Include="Models\ResultCode.cs" />
     <Compile Include="Models\Market.cs" />
     <Compile Include="Models\OnReceiveTrData.cs" />
