@@ -1,0 +1,27 @@
+﻿<!-- MainWindow.xaml -->
+<Window x:Class="WPF_Converter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_Converter"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="200" Width="400">
+    <Window.Resources>
+        <local:IntToColorConverter x:Key="IntToColorConverter"/>
+        <local:IntAndBoolToColorConverter x:Key="IntAndBoolToColorConverter"/>
+        <local:StringToIntConverter x:Key="StringToIntConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <MultiBinding Converter="{StaticResource IntAndBoolToColorConverter}" >
+                <Binding Path="PersonCount"/>
+                <Binding Path="CheckBoxIsChecked"/>
+            </MultiBinding>
+        </Grid.Background>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox Content="거리두기 2단계" VerticalAlignment="Center" IsChecked="{Binding CheckBoxIsChecked}"/>
+            <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="50" FontSize="25" Text="{Binding PersonCount, Converter={StaticResource StringToIntConverter}, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+    </Grid>
+</Window>
