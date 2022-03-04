@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace LogPractic // Note: actual namespace depends on the project name.
+﻿namespace LogPractic
 {
     public class Program
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            log.Info("Hello World!");
+            log.Error("Hello Error!");
         }
     }
 }
