@@ -1,17 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WebView2_Example
 {
@@ -24,5 +15,89 @@ namespace WebView2_Example
         {
             InitializeComponent();
         }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            webView.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
+            webView.CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
+            webView.CoreWebView2.ContentLoading += CoreWebView2_ContentLoading;
+            webView.CoreWebView2.HistoryChanged += CoreWebView2_HistoryChanged;
+            webView.CoreWebView2.DOMContentLoaded += CoreWebView2_DOMContentLoaded;
+            webView.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
+
+            await webView.EnsureCoreWebView2Async();
+            webView.CoreWebView2.AddHostObjectToScript("bridge", new Bridge());
+        }
+
+        private void CoreWebView2_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CoreWebView2_SourceChanged(object sender, Microsoft.Web.WebView2.Core.CoreWebView2SourceChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CoreWebView2_ContentLoading(object sender, Microsoft.Web.WebView2.Core.CoreWebView2ContentLoadingEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CoreWebView2_HistoryChanged(object sender, object e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CoreWebView2_DOMContentLoaded(object sender, Microsoft.Web.WebView2.Core.CoreWebView2DOMContentLoadedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void CoreWebView2_NavigationCompleted(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CoreWebView2_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
+        {
+            webView.CoreWebView2.PostWebMessageAsString("thanks, " + e.WebMessageAsJson + "rec");
+        }
+    }
+
+
+    // Bridge and BridgeAnotherClass are C# classes that implement IDispatch and works with AddHostObjectToScript.
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ComVisible(true)]
+    public class BridgeAnotherClass
+    {
+        // Sample property.
+        public string Prop { get; set; } = "Example";
+    }
+
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ComVisible(true)]
+    public class Bridge
+    {
+        public string Func(string param)
+        {
+            return JsonConvert.SerializeObject(new
+            {
+                result = param + " ended",
+                success = true
+            });
+        }
+
+        public BridgeAnotherClass AnotherObject { get; set; } = new BridgeAnotherClass();
+
+        // Sample indexed property.
+        [System.Runtime.CompilerServices.IndexerName("Items")]
+        public string this[int index]
+        {
+            get { return m_dictionary[index]; }
+            set { m_dictionary[index] = value; }
+        }
+        private Dictionary<int, string> m_dictionary = new Dictionary<int, string>();
     }
 }

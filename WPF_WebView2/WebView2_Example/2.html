@@ -1,0 +1,42 @@
+﻿<script>
+    //chrome.webview.postMessage("hello wpf");
+
+    //window.chrome.webview.addEventListener('message', event => {
+    //    alert(event.data);
+    //    console.log(event.data);
+    //});
+
+
+    asyncCall();
+
+    function asyncCall() {
+        // Find added objects on the hostObjects property
+        const bridge = chrome.webview.hostObjects.sync.bridge;
+
+        // Call a method and pass in a parameter.
+        // The result is another proxy promise so you must await to get the result.
+        var a = bridge.Func("testing...");
+        console.log(a);
+
+        // A property may be another object as long as its class also implements
+        // IDispatch.
+        // Getting a property also gets a proxy promise you must await.
+        //const propValue = await bridge.AnotherObject.Prop;
+        //console.log(propValue);
+
+        //// Indexed properties
+        //let index = 123;
+        //bridge[index] = "test";
+        //let result = await bridge[index];
+        //console.log(result);
+    }
+
+</script>
+<html>
+    <head>
+
+    </head>
+<body>
+    <h1>2</h1>
+</body>
+</html>
