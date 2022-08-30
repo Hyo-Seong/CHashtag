@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -12,6 +11,7 @@ namespace WebView2_Example
     public partial class MainWindow : Window
     {
         public string Url { get; set; }
+        public string SendString { get; set; }
 
         public MainWindow()
         {
@@ -31,8 +31,11 @@ namespace WebView2_Example
             webView.CoreWebView2.DOMContentLoaded += CoreWebView2_DOMContentLoaded;
             webView.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
 
-            
+            webView.CoreWebView2.WebMessageReceived += CoreWebView2_WebMessageReceived;
+
             webView.CoreWebView2.AddHostObjectToScript("bridge", new Bridge());
+
+            await webView.CoreWebView2.ExecuteScriptAsync("test()");
         }
 
         private void CoreWebView2_NavigationStarting(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationStartingEventArgs e)
@@ -67,23 +70,20 @@ namespace WebView2_Example
 
         private void CoreWebView2_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
         {
-            webView.CoreWebView2.PostWebMessageAsString("thanks, " + e.WebMessageAsJson + "rec");
+            Console.WriteLine("CoreWebView2_WebMessageReceived: " + e.Source);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Navigate(object sender, RoutedEventArgs e)
         {
             webView.CoreWebView2.Navigate(Url);
+
+            //webView.Source = new Uri(Url);
         }
-    }
 
-
-    // Bridge and BridgeAnotherClass are C# classes that implement IDispatch and works with AddHostObjectToScript.
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-    [ComVisible(true)]
-    public class BridgeAnotherClass
-    {
-        // Sample property.
-        public string Prop { get; set; } = "Example";
+        private async void Button_SendData(object sender, RoutedEventArgs e)
+        {
+            webView.CoreWebView2.PostWebMessageAsString(SendString);
+        }
     }
 
     [ClassInterface(ClassInterfaceType.AutoDual)]
@@ -98,16 +98,5 @@ namespace WebView2_Example
                 success = true
             });
         }
-
-        public BridgeAnotherClass AnotherObject { get; set; } = new BridgeAnotherClass();
-
-        // Sample indexed property.
-        [System.Runtime.CompilerServices.IndexerName("Items")]
-        public string this[int index]
-        {
-            get { return m_dictionary[index]; }
-            set { m_dictionary[index] = value; }
-        }
-        private Dictionary<int, string> m_dictionary = new Dictionary<int, string>();
     }
 }

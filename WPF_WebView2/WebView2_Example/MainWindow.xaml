@@ -15,12 +15,12 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <TextBox Text="{Binding Url}" Margin="0 0 50 0"/>
-            <Button Content="Navigate" HorizontalAlignment="Right" Width="50" Click="Button_Click"/>
+            <Button Content="Navigate" HorizontalAlignment="Right" Width="50" Click="Button_Navigate"/>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <TextBlock Text="전송할 데이터를 입력하세요: "/>
-            <TextBox Text="{Binding SendString}"/>
-            <Button Content="Send"/>
+            <TextBlock Text="전송할 데이터를 입력하세요: " VerticalAlignment="Center"/>
+            <TextBox Width="590" Text="{Binding SendString}"/>
+            <Button Content="Send" Width="50" Click="Button_SendData"/>
         </StackPanel>
         <wv2:WebView2 Grid.Row="2" x:Name="webView" />
     </Grid>
